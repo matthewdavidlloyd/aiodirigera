@@ -1,4 +1,4 @@
-from typing import List
+from typing import Optional, List
 
 from dataclasses import dataclass
 
@@ -74,19 +74,21 @@ class DeviceAttributes:
     firmwareVersion: str
     hardwareVersion: str
     serialNumber: str
-    productCode: str
-    isOn: bool
-    startupOnOff: str # startOn/startOff
-    lightLevel: bool
-    identifyStarted: str
-    identifyPeriod: int
-    permittingJoin: bool
-    otaStatus: str
-    otaState: str
-    otaProgress: int
-    otaPolicy: str
-    otaScheduleStart: str
-    otaScheduleEnd: str
+    productCode: Optional[str] = None # Only on Ikea devices
+    isOn: Optional[bool] = None # Only on On/Off devices
+    startupOnOff: Optional[str] = None # Only on On/Off devices
+    lightLevel: Optional[bool] = None # Only on lights
+    currentTemperature: Optional[str] = None # Only on environment sensors
+    currentRH: Optional[str] = None # Only on environment sensors
+    identifyStarted: Optional[str] = None # Only on Ikea devices
+    identifyPeriod: Optional[int] = None # Only on Ikea devices
+    permittingJoin: Optional[bool] = None # ???
+    otaStatus: Optional[str] = None # ???
+    otaState: Optional[str] = None # ???
+    otaProgress: Optional[int] = None # ???
+    otaPolicy: Optional[str] = None # ???
+    otaScheduleStart: Optional[str] = None # ???
+    otaScheduleEnd: Optional[str] = None # ???
 
 @dataclass
 class DeviceRoom:

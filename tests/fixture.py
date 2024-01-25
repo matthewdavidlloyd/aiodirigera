@@ -1,7 +1,7 @@
 
 import json
 
-LIGHT_DIMMABLE = json.loads(
+IKEA_LIGHT_DIMMABLE = json.loads(
     """
     {
         "id": "7c3a87ef-d9e4-4997-8d57-ee5d6f903b65_1",
@@ -44,6 +44,51 @@ LIGHT_DIMMABLE = json.loads(
             "name": "Sitting Room",
             "color": "ikea_beige_1",
             "icon": "rooms_arm_chair"
+        },
+        "deviceSet": [],
+        "remoteLinks": [],
+        "isHidden": false
+    }
+    """
+)
+
+THIRD_PARTY_SENSOR_ENVIRONMENT = json.loads(
+    """
+    {
+        "id": "84e5a365-a501-4642-aaf5-c9f180390843_1",
+        "type": "sensor",
+        "deviceType": "environmentSensor",
+        "createdAt": "2024-01-23T08:54:51.000Z",
+        "isReachable": true,
+        "lastSeen": "2024-01-25T17:44:10.000Z",
+        "attributes": {
+            "customName": "Bedroom Air Sensor",
+            "firmwareVersion": "",
+            "hardwareVersion": "",
+            "manufacturer": "",
+            "model": "lumi.weather",
+            "serialNumber": "00158D000AD5E783",
+            "currentTemperature": 18.15,
+            "currentRH": 69,
+            "permittingJoin": false,
+            "otaPolicy": "autoUpdate",
+            "otaProgress": 0,
+            "otaScheduleEnd": "00:00",
+            "otaScheduleStart": "00:00",
+            "otaState": "readyToCheck",
+            "otaStatus": "upToDate"
+        },
+        "capabilities": {
+            "canSend": [],
+            "canReceive": [
+                "customName"
+            ]
+        },
+        "room": {
+            "id": "2cd56851-e787-4a88-925b-410c3da7d6ed",
+            "name": "Bedroom",
+            "color": "ikea_beige_1",
+            "icon": "rooms_bed"
         },
         "deviceSet": [],
         "remoteLinks": [],

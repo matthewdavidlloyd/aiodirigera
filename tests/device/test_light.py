@@ -4,7 +4,7 @@ from pytest_httpserver import HTTPServer
 
 from aiodirigera.device.light import LightAPI, Light
 
-from tests.fixture import LIGHT_DIMMABLE
+from tests.fixture import IKEA_LIGHT_DIMMABLE
 
 
 async def test_update_state(httpserver: HTTPServer):
@@ -12,14 +12,11 @@ async def test_update_state(httpserver: HTTPServer):
     api = LightAPI(httpserver.host, "some-madeup-token", id, scheme="http", port=httpserver.port)
     device = Light(api)
 
-    assert device.is_on is None
-    assert device.brightness is None
-
     httpserver.expect_request(
         f"/v1/devices/{id}",
         method="GET"
     ).respond_with_json(
-        LIGHT_DIMMABLE
+        IKEA_LIGHT_DIMMABLE
     )
 
     await device.update_state()

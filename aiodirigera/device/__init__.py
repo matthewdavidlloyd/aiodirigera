@@ -3,6 +3,7 @@ from typing import Dict, Optional
 from aiodirigera.api import API
 from aiodirigera.api_model import DeviceStatus
 
+
 class DeviceState:
     name: Optional[str] = None
     manufacturer: Optional[str] = None
