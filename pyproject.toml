@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=62.3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aiodirigera"
+# The version is set by GH action on release
+version = "0.0.0"
+license     = {text = "MIT"}
+description = "Python module to talk to Ikea Dirigera."
+readme = "README.md"
+requires-python = ">=3.11"
+authors     = [
+    {name = "Matt Lloyd", email = "matt.lloyd@protonmail.com"}
+]
+classifiers = [
+  "Environment :: Console",
+  "Programming Language :: Python :: 3",
+]
+dependencies = [
+  "aiohttp",
+  "asyncio-throttle",
+]
+
+[project.optional-dependencies]
+test = [
+  "pytest==7.4.3",
+  "pytest-asyncio==0.23.2",
+  "pytest-aiohttp==1.0.5",
+  "pytest-httpserver==1.0.8",
+  "pytest-cov==4.1.0",
+  "pylint==3.0.2"
+]
+dev = [
+  "python-dotenv"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--cov aiodirigera -ra"
+asyncio_mode = "auto"
+
+[tool.setuptools]
+platforms = ["any"]
+zip-safe  = false
+packages = ["aiodirigera"]
+include-package-data = true
