@@ -2,15 +2,16 @@ import uuid
 
 from pytest_httpserver import HTTPServer
 
-from aiodirigera.device.light import LightAPI, Light
+from aiodirigera.device.light import Light
+from aiodirigera.hub import Hub
 
 from tests.fixture import IKEA_LIGHT_DIMMABLE
 
 
 async def test_update_state(httpserver: HTTPServer):
+    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
     id = str(uuid.uuid4()) 
-    api = LightAPI(httpserver.host, "some-madeup-token", id, scheme="http", port=httpserver.port)
-    device = Light(api)
+    device = Light(hub, id)
 
     httpserver.expect_request(
         f"/v1/devices/{id}",
@@ -27,9 +28,9 @@ async def test_update_state(httpserver: HTTPServer):
 
 
 async def test_turn_on(httpserver: HTTPServer):
+    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
     id = str(uuid.uuid4()) 
-    api = LightAPI(httpserver.host, "some-madeup-token", id, scheme="http", port=httpserver.port)
-    device = Light(api)
+    device = Light(hub, id)
 
     httpserver.expect_request(
         f"/v1/devices/{id}",
@@ -43,9 +44,9 @@ async def test_turn_on(httpserver: HTTPServer):
 
 
 async def test_turn_off(httpserver: HTTPServer):
+    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
     id = str(uuid.uuid4()) 
-    api = LightAPI(httpserver.host, "some-madeup-token", id, scheme="http", port=httpserver.port)
-    device = Light(api)
+    device = Light(hub, id)
 
     httpserver.expect_request(
         f"/v1/devices/{id}",
@@ -59,9 +60,9 @@ async def test_turn_off(httpserver: HTTPServer):
 
 
 async def test_set_brightness(httpserver: HTTPServer):
+    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
     id = str(uuid.uuid4()) 
-    api = LightAPI(httpserver.host, "some-madeup-token", id, scheme="http", port=httpserver.port)
-    device = Light(api)
+    device = Light(hub, id)
 
     brightness = 69
 

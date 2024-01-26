@@ -3,12 +3,13 @@ import os
 
 from dotenv import load_dotenv
 
-from aiodirigera.device.light import LightAPI, Light
+from aiodirigera.device.light import Light
+from aiodirigera.hub import Hub
 
 
 async def turn_on():
-    api = LightAPI(os.getenv('HUB_IP'), os.getenv('HUB_TOKEN'), os.getenv('LIGHT_ID'))
-    device = Light(api)
+    hub = Hub(os.getenv('HUB_IP'), os.getenv('HUB_TOKEN'))
+    device = Light(hub, os.getenv('LIGHT_ID'))
 
     await device.turn_on()
 

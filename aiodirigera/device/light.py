@@ -1,30 +1,13 @@
 from typing import Optional
 
-from aiodirigera.device import OnOffDeviceState, OnOffDeviceAPI
+from aiodirigera.device import OnOffDevice
 
 
-class LightState(OnOffDeviceState):
+class Light(OnOffDevice):
     brightness: Optional[int] = None
 
-
-class LightAPI(OnOffDeviceAPI):
-    async def set_brightness(self, brightness: int) -> None:
-        if brightness < 1 or brightness > 100:
-            raise ValueError("Brightness must be in range [1, 100]")
-        
-        await self.update_status(
-            [{"attributes": {"lightLevel": brightness}}]
-        )
-
-
-class Light(LightState):
-    _delegate: LightAPI
-
-    def __init__(self, delegate: LightAPI):
-        self._delegate = delegate
-
     async def update_state(self) -> None:
-        device_status = await self._delegate.get_status()
+        device_status = await self._hub.get_device(self._id)
 
         self.name = device_status.attributes.customName
         self.manufacturer = device_status.attributes.manufacturer
@@ -34,12 +17,11 @@ class Light(LightState):
         self.is_on = device_status.attributes.isOn
         self.brightness = device_status.attributes.lightLevel
 
-    async def turn_on(self) -> None:
-        await self._delegate.turn_on()
-
-    async def turn_off(self) -> None:
-        await self._delegate.turn_off()
-
     async def set_brightness(self, brightness: int) -> None:
-        await self._delegate.set_brightness(brightness)
-
+        if brightness < 1 or brightness > 100:
+            raise ValueError("Brightness must be in range [1, 100]")
+        
+        await self._hub.update_device(
+            self._id,
+            [{"attributes": {"lightLevel": brightness}}]
+        )

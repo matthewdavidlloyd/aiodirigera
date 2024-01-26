@@ -2,16 +2,16 @@ import uuid
 
 from pytest_httpserver import HTTPServer
 
-from aiodirigera.device import DeviceAPI
 from aiodirigera.device.sensor import EnvironmentSensor
+from aiodirigera.hub import Hub
 
 from tests.fixture import THIRD_PARTY_SENSOR_ENVIRONMENT
 
 
 async def test_update_state(httpserver: HTTPServer):
+    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
     id = str(uuid.uuid4()) 
-    api = DeviceAPI(httpserver.host, "some-madeup-token", id, scheme="http", port=httpserver.port)
-    device = EnvironmentSensor(api)
+    device = EnvironmentSensor(hub, id)
 
     httpserver.expect_request(
         f"/v1/devices/{id}",

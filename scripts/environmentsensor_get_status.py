@@ -3,13 +3,13 @@ import os
 
 from dotenv import load_dotenv
 
-from aiodirigera.device import DeviceAPI
 from aiodirigera.device.sensor import EnvironmentSensor
+from aiodirigera.hub import Hub
 
 
 async def print_state():
-    api = DeviceAPI(os.getenv('HUB_IP'), os.getenv('HUB_TOKEN'), os.getenv('ENVIRONMENTSENSOR_ID'))
-    device = EnvironmentSensor(api)
+    hub = Hub(os.getenv('HUB_IP'), os.getenv('HUB_TOKEN'))
+    device = EnvironmentSensor(hub, os.getenv('ENVIRONMENTSENSOR_ID'))
 
     await device.update_state()
 
