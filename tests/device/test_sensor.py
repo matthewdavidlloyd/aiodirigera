@@ -9,8 +9,13 @@ from tests.fixture import THIRD_PARTY_SENSOR_ENVIRONMENT
 
 
 async def test_update_state(httpserver: HTTPServer):
-    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
-    id = str(uuid.uuid4()) 
+    hub = Hub(
+        httpserver.host,
+        "some-madeup-token",
+        scheme="http",
+        port=httpserver.port
+    )
+    id = str(uuid.uuid4())
     device = EnvironmentSensor(hub, id)
 
     httpserver.expect_request(

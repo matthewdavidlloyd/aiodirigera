@@ -10,8 +10,13 @@ from tests.fixture import IKEA_LIGHT_DIMMABLE
 
 
 async def test_update_state(httpserver: HTTPServer):
-    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
-    id = str(uuid.uuid4()) 
+    hub = Hub(
+        httpserver.host,
+        "some-madeup-token",
+        scheme="http",
+        port=httpserver.port
+    )
+    id = str(uuid.uuid4())
     device = Light(hub, id)
 
     httpserver.expect_request(
@@ -34,8 +39,13 @@ async def test_update_state(httpserver: HTTPServer):
 
 
 async def test_turn_on(httpserver: HTTPServer):
-    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
-    id = str(uuid.uuid4()) 
+    hub = Hub(
+        httpserver.host,
+        "some-madeup-token",
+        scheme="http",
+        port=httpserver.port
+    )
+    id = str(uuid.uuid4())
     device = Light(hub, id)
 
     httpserver.expect_request(
@@ -50,8 +60,13 @@ async def test_turn_on(httpserver: HTTPServer):
 
 
 async def test_turn_off(httpserver: HTTPServer):
-    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
-    id = str(uuid.uuid4()) 
+    hub = Hub(
+        httpserver.host,
+        "some-madeup-token",
+        scheme="http",
+        port=httpserver.port
+    )
+    id = str(uuid.uuid4())
     device = Light(hub, id)
 
     httpserver.expect_request(
@@ -66,8 +81,13 @@ async def test_turn_off(httpserver: HTTPServer):
 
 
 async def test_set_brightness(httpserver: HTTPServer):
-    hub = Hub(httpserver.host, "some-madeup-token", scheme="http", port=httpserver.port)
-    id = str(uuid.uuid4()) 
+    hub = Hub(
+        httpserver.host,
+        "some-madeup-token",
+        scheme="http",
+        port=httpserver.port
+    )
+    id = str(uuid.uuid4())
     device = Light(hub, id)
 
     brightness = 69
@@ -81,24 +101,25 @@ async def test_set_brightness(httpserver: HTTPServer):
     await device.set_brightness(brightness)
 
     httpserver.check()
-    
+
+
 async def test_set_brightness_fails_if_brightness_less_than_1():
     hub = Hub("some-madeup-host", "some-madeup-token")
-    id = str(uuid.uuid4()) 
+    id = str(uuid.uuid4())
     device = Light(hub, id)
 
     brightness = 0
 
-    with pytest.raises(ValueError): 
+    with pytest.raises(ValueError):
         await device.set_brightness(brightness)
 
 
 async def test_set_brightness_fails_if_brightness_more_than_100():
     hub = Hub("some-madeup-host", "some-madeup-token")
-    id = str(uuid.uuid4()) 
+    id = str(uuid.uuid4())
     device = Light(hub, id)
 
     brightness = 101
 
-    with pytest.raises(ValueError): 
+    with pytest.raises(ValueError):
         await device.set_brightness(brightness)

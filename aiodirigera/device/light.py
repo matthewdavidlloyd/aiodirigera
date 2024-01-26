@@ -20,7 +20,7 @@ class Light(OnOffDevice):
     async def set_brightness(self, brightness: int) -> None:
         if brightness < 1 or brightness > 100:
             raise ValueError("Brightness must be in range [1, 100]")
-        
+
         await self._hub.update_device(
             self._id,
             [{"attributes": {"lightLevel": brightness}}]

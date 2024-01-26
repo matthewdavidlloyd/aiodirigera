@@ -16,4 +16,3 @@ async def turn_off():
 if __name__ == '__main__':
     load_dotenv()
     asyncio.run(turn_off())
-

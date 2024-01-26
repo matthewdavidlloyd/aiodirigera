@@ -6,7 +6,7 @@ from aiodirigera.device import Device
 class EnvironmentSensor(Device):
     temperature: Optional[int] = None
     humidity: Optional[int] = None
-    
+
     async def update_state(self) -> None:
         device_status = await self._hub.get_device(self._id)
 

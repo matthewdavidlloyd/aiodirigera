@@ -30,7 +30,11 @@ def code_challenge(code_verifier: str) -> str:
     return sha256_hash_as_base64
 
 
-async def send_challenge(ip_address: str, code_verifier: str, client_session: ClientSession) -> str:
+async def send_challenge(
+    ip_address: str,
+    code_verifier: str,
+    client_session: ClientSession = ClientSession()
+) -> str:
     url = f"https://{ip_address}:8443/v1/oauth/authorize"
     params = {
         "audience": "homesmart.local",
@@ -40,7 +44,12 @@ async def send_challenge(ip_address: str, code_verifier: str, client_session: Cl
     }
 
     try:
-        async with client_session.get(url, params=params, ssl=False, timeout=30) as res:
+        async with client_session.get(
+            url,
+            params=params,
+            ssl=False,
+            timeout=30
+        ) as res:
             res.raise_for_status()
             res_json = await res.json()
             return res_json["code"]
@@ -48,7 +57,12 @@ async def send_challenge(ip_address: str, code_verifier: str, client_session: Cl
         await client_session.close()
 
 
-async def get_token(ip_address: str, code: str, code_verifier: str, client_session: ClientSession = ClientSession()) -> str:
+async def get_token(
+    ip_address: str,
+    code: str,
+    code_verifier: str,
+    client_session: ClientSession = ClientSession()
+) -> str:
     url = f"https://{ip_address}:8443/v1/oauth/token"
     data = str(
         "code="
@@ -63,7 +77,13 @@ async def get_token(ip_address: str, code: str, code_verifier: str, client_sessi
     headers = {"Content-Type": "application/x-www-form-urlencoded"}
 
     try:
-        async with client_session.post(url, data=data, headers=headers, ssl=False, timeout=30) as res:
+        async with client_session.post(
+            url,
+            data=data,
+            headers=headers,
+            ssl=False,
+            timeout=30
+        ) as res:
             res.raise_for_status()
             res_json = await res.json()
             return res_json["access_token"]
