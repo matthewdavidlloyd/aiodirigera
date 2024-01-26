@@ -1,5 +1,6 @@
 import uuid
 
+import pytest
 from pytest_httpserver import HTTPServer
 
 from aiodirigera.device.light import Light
@@ -23,6 +24,11 @@ async def test_update_state(httpserver: HTTPServer):
     await device.update_state()
 
     httpserver.check()
+    assert device.name == "Sitting Room light"
+    assert device.manufacturer == "IKEA of Sweden"
+    assert device.model == "TRADFRIbulbE27WWclear250lm"
+    assert device.serial_number == "943469FFFE71ADD9"
+    assert device.firmware_version == "1.1.006"
     assert device.is_on is True
     assert device.brightness == 50
 
@@ -76,3 +82,23 @@ async def test_set_brightness(httpserver: HTTPServer):
 
     httpserver.check()
     
+async def test_set_brightness_fails_if_brightness_less_than_1():
+    hub = Hub("some-madeup-host", "some-madeup-token")
+    id = str(uuid.uuid4()) 
+    device = Light(hub, id)
+
+    brightness = 0
+
+    with pytest.raises(ValueError): 
+        await device.set_brightness(brightness)
+
+
+async def test_set_brightness_fails_if_brightness_more_than_100():
+    hub = Hub("some-madeup-host", "some-madeup-token")
+    id = str(uuid.uuid4()) 
+    device = Light(hub, id)
+
+    brightness = 101
+
+    with pytest.raises(ValueError): 
+        await device.set_brightness(brightness)

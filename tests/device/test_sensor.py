@@ -23,5 +23,10 @@ async def test_update_state(httpserver: HTTPServer):
     await device.update_state()
 
     httpserver.check()
+    assert device.name == "Bedroom Air Sensor"
+    assert device.manufacturer == ""
+    assert device.model == "lumi.weather"
+    assert device.serial_number == "00158D000AD5E783"
+    assert device.firmware_version == ""
     assert device.temperature == 18.15
     assert device.humidity == 69
