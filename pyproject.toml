@@ -24,6 +24,7 @@ dependencies = [
 
 [project.optional-dependencies]
 test = [
+  "flake8",
   "pytest==7.4.3",
   "pytest-asyncio==0.23.2",
   "pytest-aiohttp==1.0.5",
