@@ -37,7 +37,7 @@ async def authenticate():
         print(f"Token: {token}")
 
     hub = Hub(hub_ip, token)
-    hub_status = await hub.get_hub_status()
+    hub_status = await hub.get_status()
     print(hub_status)
 
 if __name__ == '__main__':
