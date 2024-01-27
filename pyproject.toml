@@ -45,5 +45,5 @@ asyncio_mode = "auto"
 [tool.setuptools]
 platforms = ["any"]
 zip-safe  = false
-packages = ["aiodirigera"]
+packages = ["aiodirigera", "aiodirigera.device"]
 include-package-data = true
