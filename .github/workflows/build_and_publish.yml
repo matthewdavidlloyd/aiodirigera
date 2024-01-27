@@ -1,0 +1,64 @@
+name: Build & Publish
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.vars.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Get tag
+        id: vars
+        run: echo "tag=${GITHUB_REF#refs/*/}" >> $GITHUB_OUTPUT
+      - name: Set up Python
+        uses: actions/setup-python@v5.0.0
+        with:
+          python-version: "3.11"
+      - name: Install build
+        run: |
+          pip install build tomli tomli-w
+      - name: Set Python project version from tag
+        shell: python
+        run: |
+          import tomli
+          import tomli_w
+
+          with open("pyproject.toml", "rb") as f:
+            pyproject = tomli.load(f)
+
+          pyproject["project"]["version"] = "${{ steps.vars.outputs.tag }}"
+
+          with open("pyproject.toml", "wb") as f:
+            tomli_w.dump(pyproject, f)
+      - name: Build
+        run: |
+          python3 -m build
+      - name: 'Upload Artifact'
+        uses: actions/upload-artifact@v4
+        with:
+          name: aiodirigera
+          path: dist
+          retention-days: 5
+  publish-pypi:
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/<your-pypi-project-name>
+    permissions:
+      id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+    steps:
+    - name: Download artifact
+      uses: actions/download-artifact@v4
+      with:
+        name: aiodirigera
+        path: dist
+    - name: list
+      run: |
+        ls -r
+    - name: Publish package distributions to PyPI
+      uses: pypa/gh-action-pypi-publish@release/v1
