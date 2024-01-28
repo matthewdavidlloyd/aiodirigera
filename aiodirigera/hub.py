@@ -33,7 +33,7 @@ class Hub:
 
     async def get_device_statuses(self) -> List[DeviceStatus]:
         raw = await self._delegate.get("/devices")
-        return [DeviceStatus(**x) for x in raw]
+        return [DeviceStatus(**x) for x in raw if x["type"] != "gateway"]
 
     async def get_devices(self) -> List[Device]:
         device_statuses = await self.get_device_statuses()

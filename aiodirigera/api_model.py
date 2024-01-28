@@ -88,6 +88,12 @@ class DeviceAttributes:
     firmwareVersion: str
     hardwareVersion: str
     serialNumber: str
+    otaStatus: str
+    otaState: str
+    otaProgress: int
+    otaPolicy: str
+    otaScheduleStart: str
+    otaScheduleEnd: str
     productCode: Optional[str] = None  # Only on Ikea devices
     isOn: Optional[bool] = None  # Only on On/Off devices
     startupOnOff: Optional[str] = None  # Only on On/Off devices
@@ -97,12 +103,6 @@ class DeviceAttributes:
     identifyStarted: Optional[str] = None  # Only on Ikea devices
     identifyPeriod: Optional[int] = None  # Only on Ikea devices
     permittingJoin: Optional[bool] = None  # ???
-    otaStatus: Optional[str] = None  # ???
-    otaState: Optional[str] = None  # ???
-    otaProgress: Optional[int] = None  # ???
-    otaPolicy: Optional[str] = None  # ???
-    otaScheduleStart: Optional[str] = None  # ???
-    otaScheduleEnd: Optional[str] = None  # ???
 
 
 @dataclass
@@ -127,6 +127,7 @@ class DeviceStatus:
     deviceSet: List[str]
     remoteLinks: List[str]
     isHidden: bool
+    customIcon: Optional[str] = None
 
     def __post_init__(self):
         self.attributes = DeviceAttributes(**self.attributes)
