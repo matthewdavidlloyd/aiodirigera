@@ -1,7 +1,6 @@
 import pytest
 from pytest_httpserver import HTTPServer
 
-from aiodirigera.device.light import Light
 from aiodirigera.hub import Hub
 
 from tests.fixture import IKEA_LIGHT_DIMMABLE

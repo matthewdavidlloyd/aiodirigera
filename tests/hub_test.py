@@ -31,6 +31,11 @@ async def test_get_status(httpserver: HTTPServer):
 
     httpserver.check()
     assert hub_status.id == "cb524caf-fed3-4adc-b887-1429d27f6ebf_1"
+    assert hub_status.attributes.customName == "Home"
+    assert hub_status.attributes.model == "DIRIGERA Hub for smart products"
+    assert hub_status.attributes.manufacturer == "IKEA of Sweden"
+    assert hub_status.attributes.firmwareVersion == "2.453.3"
+    assert hub_status.attributes.serialNumber == "cb524caf-fed3-4adc-b887-1429d27f6ebf"  ## noqa
 
 
 async def test_get_devices(httpserver: HTTPServer):

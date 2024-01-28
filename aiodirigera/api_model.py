@@ -53,6 +53,9 @@ class HubAttributes:
     countryCode: str
     isOn: bool
 
+    def __post_init__(self):
+        self.userConsents = [UserConsents(**x) for x in self.userConsents]
+
 
 @dataclass
 class HubStatus:
@@ -68,6 +71,10 @@ class HubStatus:
     deviceSet: List[str]
     remoteLinks: List[str]
     apiVersion: str
+
+    def __post_init__(self):
+        self.attributes = HubAttributes(**self.attributes)
+        self.capabilities = Capabilities(**self.capabilities)
 
 
 # Device Specific
