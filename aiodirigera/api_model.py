@@ -70,6 +70,7 @@ class HubStatus:
     capabilities: Capabilities
     deviceSet: List[str]
     remoteLinks: List[str]
+    environment: str
     apiVersion: str
 
     def __post_init__(self):

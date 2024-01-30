@@ -67,6 +67,7 @@ HUB_STATUS = json.loads(
         },
         "deviceSet": [],
         "remoteLinks": [],
+        "environment": "prod",
         "apiVersion": "1.3.29"
     }
     """
