@@ -19,6 +19,11 @@ class UserConsents:
     name: str
     value: str
 
+@dataclass
+class HubCoordinates:
+    latitude: Optional[float]
+    longitude: Optional[float]
+    accuracy: Optional[float] # -1 for me
 
 @dataclass
 class HubAttributes:
@@ -52,6 +57,7 @@ class HubAttributes:
     homestateLastChanged: str
     countryCode: str
     isOn: bool
+    coordinates: Optional[HubCoordinates]
 
     def __post_init__(self):
         self.userConsents = [UserConsents(**x) for x in self.userConsents]
