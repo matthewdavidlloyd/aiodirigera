@@ -95,12 +95,12 @@ class DeviceAttributes:
     firmwareVersion: str
     hardwareVersion: str
     serialNumber: str
-    otaStatus: str
-    otaState: str
-    otaProgress: int
-    otaPolicy: str
-    otaScheduleStart: str
-    otaScheduleEnd: str
+    otaStatus: Optional[str] = None # Not everything is OTA capable
+    otaState: Optional[str] = None
+    otaProgress: Optional[str] = None
+    otaPolicy: Optional[str] = None
+    otaScheduleStart: Optional[str] = None
+    otaScheduleEnd: Optional[str] = None
     productCode: Optional[str] = None  # Only on Ikea devices
     isOn: Optional[bool] = None  # Only on On/Off devices
     startupOnOff: Optional[str] = None  # Only on On/Off devices
@@ -110,15 +110,35 @@ class DeviceAttributes:
     identifyStarted: Optional[str] = None  # Only on Ikea devices
     identifyPeriod: Optional[int] = None  # Only on Ikea devices
     permittingJoin: Optional[bool] = None  # ???
-
+    batteryPercentage: Optional[str] = None
+    blindsCurrentLevel: Optional[str] = None
+    blindsState: Optional[str] = None # Probably an enum?
+    blindsTargetLevel: Optional[str] = None
+    circadianPresets: Optional[str] = None # donno
+    colorHue: Optional[str] = None # donno
+    colorSaturation: Optional[str] = None # donno
+    colorTemperature: Optional[str] = None # donno
+    colorTemperatureMin: Optional[str] = None # donno
+    colorTemperatureMax: Optional[str] = None # donno
+    startupTemperature: Optional[str] = None # donno
+    colorMode: Optional[str] = None # donno
+    playback: Optional[str] = None # donno
+    playbackLastChangedTimestamp: Optional[str] = None # donno
+    playbackAudio: Optional[str] = None # speaker?
+    playbackPosition: Optional[str] = None # speaker?
+    playbackAvailableActions: Optional[str] = None # speaker?
+    playbackModes: Optional[str] = None # speaker?
+    volume: Optional[str] = None # speaker?
+    isMuted: Optional[str] = None # speaker?
+    audioGroup: Optional[str] = None # speaker?
+    sensorConfig: Optional[str] = None # no idea
 
 @dataclass
 class DeviceRoom:
-    id: str
-    name: str
-    color: str
-    icon: str
-
+    id: Optional[str] = None
+    name: Optional[str] = "Unassigned"
+    color: Optional[str] = None
+    icon: Optional[str] = None
 
 @dataclass
 class DeviceStatus:
@@ -130,13 +150,15 @@ class DeviceStatus:
     lastSeen: str
     attributes: DeviceAttributes
     capabilities: Capabilities
-    room: DeviceRoom
     deviceSet: List[str]
     remoteLinks: List[str]
     isHidden: bool
+    room: Optional[DeviceRoom] = None
     customIcon: Optional[str] = None
 
     def __post_init__(self):
         self.attributes = DeviceAttributes(**self.attributes)
         self.capabilities = Capabilities(**self.capabilities)
-        self.room = DeviceRoom(**self.room)
+
+        if(self.room is not None):
+            self.room = DeviceRoom(**self.room)
